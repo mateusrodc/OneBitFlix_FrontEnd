@@ -7,7 +7,7 @@ const HeaderNoAuth = function () {
         <>
             <div className={styles.ctaSection}>
                 <img src="/homeNoAuth/logoCta.png" alt="logoCta" className={styles.imgCta}/>
-                <p>Se cadastre para ter acesso aos cursos</p>
+                <p className={styles.title}>Se cadastre para ter acesso aos cursos</p>
                 <img src="/homeNoAuth/logoCta.png" alt="logoCta" className={styles.imgCta}/>
             </div>
             <Container className={styles.nav}>
