@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from "next/head";
 import FeaturedSection from '@/components/homeAuth/featuresSection';
 import NewestCategory from '@/components/homeAuth/newestCategory';
+import FavoritesCategory from '@/components/homeAuth/favoriteCategory';
 
 const HomeAuth = function () {
     return (
@@ -14,6 +15,7 @@ const HomeAuth = function () {
         <main>
             <FeaturedSection />
             <NewestCategory />
+            <FavoritesCategory />
         </main>
       </>
     );

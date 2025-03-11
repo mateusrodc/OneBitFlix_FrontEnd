@@ -44,6 +44,58 @@ const courseService = {
   
      return res;
   },
+  addToFav: async (courseId: number | string) => {
+    
+    const token = sessionStorage.getItem("onebitflix-token");
+
+    const res = await api.post("/favorites", {courseId}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((error) => {
+      console.log(error.response.data.message);
+    
+      return error.response;
+    });
+    
+    return res;
+  },
+  removeFav: async (courseId: number | string) => {
+    const token = sessionStorage.getItem("onebitflix-token");
+  
+    const res = await api.
+      delete("/favorites", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: { courseId },
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+  
+        return error.response;
+      });
+  
+      return res;
+  },
+  getFavCourses: async () => {
+    const token = sessionStorage.getItem("onebitflix-token");
+  
+    const res = await api
+      .get("/favorites", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+  
+        return error.response;
+      });
+  
+      return res;
+  },
 };
 
 export default courseService
