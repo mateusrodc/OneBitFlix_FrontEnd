@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { Button , Container} from "reactstrap";
+import {Container} from "reactstrap";
 
 const Footer = function () {
   return (
