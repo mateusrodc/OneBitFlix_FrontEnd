@@ -1,7 +1,7 @@
 import '../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import HeaderAuth from "@/components/common/headerAuth";
 import Head from "next/head";
+import FeaturedSection from '@/components/homeAuth/featuresSection';
 
 const HomeAuth = function () {
     return (
@@ -11,7 +11,7 @@ const HomeAuth = function () {
             <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
         </Head>
         <main>
-            <HeaderAuth />
+            <FeaturedSection />
         </main>
       </>
     );
