@@ -13,7 +13,7 @@ const UserFrom = function () {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [created_at, setCreated_At] = useState("");
-
+    const [isLoading, setIsLoading] = useState(false);
     const date = new Date(created_at);
     const month = date.toLocaleDateString("default", { month: "long" });
 
@@ -24,6 +24,9 @@ const UserFrom = function () {
         setPhone(user.phone);
         setEmail(user.email);
         setCreated_At(user.created_at);
+    }).catch((error) => {
+        console.error("Erro ao buscar dados:", error);
+        setIsLoading(false);
     });
     }, []);
     

@@ -6,7 +6,6 @@ import UserFrom from "@/components/profile/user";
 import HeaderAuth from "@/components/common/headerAuth";
 import { Button, Col, Container, Row } from "reactstrap";
 import Footer from "@/components/common/footer";
-import { useEffect } from "react";
 
 const UserInfo = function () {
   
