@@ -3,6 +3,7 @@ import styles from "../../../../styles/profile.module.scss";
 import { FormEvent, useEffect, useState } from "react";
 import profileService from "@/services/profileService";
 import ToastComponent from "@/components/common/toast";
+import Footer from "@/components/common/footer";
 
 const PasswordForm= function () {
     const [currentPassword, setCurrentPassword] = useState("");
@@ -39,7 +40,7 @@ const PasswordForm= function () {
         }
         const res = await profileService.passwordUpdate({
             currentPassword,
-          newPassword,
+            newPassword,
         });
         if (res === 204) {
             setToastIsOpen(true);
@@ -61,73 +62,78 @@ const PasswordForm= function () {
 
     return (
         <>
-            <Form className={styles.form} onSubmit={handlePasswordUpdate}>
-                <div className={styles.inputNormalDiv}>
-                    <FormGroup>
-                    <Label className={styles.label} for="currentPassword">
-                        SENHA ATUAL
-                    </Label>
-                    <Input
-                        name="currentPassword"
-                        type="password"
-                        id="currentPassword"
-                        placeholder="******"
-                        required
-                        maxLength={12}
-                        value={currentPassword}
-                        onChange={(event) => {
-                            setCurrentPassword(event.currentTarget.value);
-                        }}
-                        className={styles.input}
-                    />
-                </FormGroup>
+            <div style={{ display: "flex", flexDirection: "column", minHeight: "55vh" }}>
+                <div style={{ flexGrow: 1 }}>
+                    <Form className={styles.form} onSubmit={handlePasswordUpdate}>
+                    <div className={styles.inputNormalDiv}>
+                        <FormGroup>
+                            <Label className={styles.label} for="currentPassword">
+                                SENHA ATUAL
+                            </Label>
+                            <Input
+                                name="currentPassword"
+                                type="password"
+                                id="currentPassword"
+                                placeholder="******"
+                                required
+                                maxLength={12}
+                                value={currentPassword}
+                                onChange={(event) => {
+                                    setCurrentPassword(event.currentTarget.value);
+                                }}
+                                className={styles.input}
+                            />
+                        </FormGroup>
+                    </div>
+                    <div className={styles.inputFlexDiv}>
+                        <FormGroup>
+                            <Label className={styles.label} for="newPassword">
+                                NOVA SENHA
+                            </Label>
+                            <Input
+                                name="newPassword"
+                                type="password"
+                                id="newPassword"
+                                placeholder="******"
+                                required
+                                value={newPassword}
+                                onChange={(event) => {
+                                    setNewPassword(event.currentTarget.value);
+                                }}
+                                className={styles.inputFlex}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label className={styles.label} for="confirmNewPassword">
+                                CONFIRMAR NOVA SENHA
+                            </Label>
+                            <Input
+                                name="confirmNewPassword"
+                                type="password"
+                                id="confirmNewPassword"
+                                placeholder="******"
+                                required
+                                value={confirmPassword}
+                                onChange={(event) => {
+                                    setConfirmPassword(event.currentTarget.value);
+                                }}
+                                className={styles.inputFlex}
+                            />
+                        </FormGroup>
+                    
+                    </div>
+                    <Button type="submit" className={styles.formBtn} outline>
+                        Salvar Alterações
+                    </Button>
+                </Form>
+                <ToastComponent
+                    color={color}
+                    isOpen={toastIsOpen}
+                    message={errorMessage}
+                />
                 </div>
-                <div className={styles.inputFlexDiv}>
-                    <FormGroup>
-                        <Label className={styles.label} for="newPassword">
-                            NOVA SENHA
-                        </Label>
-                        <Input
-                            name="newPassword"
-                            type="password"
-                            id="newPassword"
-                            placeholder="******"
-                            required
-                            value={newPassword}
-                            onChange={(event) => {
-                                setNewPassword(event.currentTarget.value);
-                            }}
-                            className={styles.inputFlex}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label className={styles.label} for="confirmNewPassword">
-                            CONFIRMAR NOVA SENHA
-                        </Label>
-                        <Input
-                            name="confirmNewPassword"
-                            type="password"
-                            id="confirmNewPassword"
-                            placeholder="******"
-                            required
-                            value={confirmPassword}
-                            onChange={(event) => {
-                                setConfirmPassword(event.currentTarget.value);
-                            }}
-                            className={styles.inputFlex}
-                        />
-                    </FormGroup>
-                
-                </div>
-                <Button type="submit" className={styles.formBtn} outline>
-                    Salvar Alterações
-                </Button>
-            </Form>
-            <ToastComponent
-                color={color}
-                isOpen={toastIsOpen}
-                message={errorMessage}
-            />
+            </div>
+            
         </>
     )
 };
