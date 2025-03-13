@@ -12,10 +12,10 @@ const EpisodeList = function ({ episode, course }: props) {
 
     const handleEpisodePlayer = () => {
         router.push(
-          `/courses/episodes/${episode.order - 1}?courseid=${course.id}`
+          `/courses/episodes/${episode.order - 1}?courseid=${course.id}&episodeid=${episode.id}`
         );
     };
-    
+
     const handleSecondsToMin = (totalSeconds: number) => {
         const minutes = Math.floor(totalSeconds / 60);
     

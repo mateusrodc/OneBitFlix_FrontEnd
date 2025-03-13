@@ -4,11 +4,12 @@ import styles from "../../../styles/episodePlayer.module.scss";
 import Head from "next/head";
 import { useRouter } from 'next/router';
 import HeaderGeneric from '@/components/common/headerGeneric';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import courseService, { CourseType } from '@/services/courseService';
 import PageSpinner from '@/components/common/spinner';
 import { Button, Container } from 'reactstrap';
 import ReactPlayer from 'react-player';
+import watchEpisodeService from '@/services/episodeService';
 
 const EpisodePlayer = function () {
 
@@ -16,8 +17,12 @@ const EpisodePlayer = function () {
 
   const episodeOrder = parseFloat(router.query.id?.toString() || "");
   const courseId = router.query.courseid?.toString() || "";
+  const episodeId = parseFloat(router.query.episodeid?.toString() || "");
 
   const [course, setCourse] = useState<CourseType>();
+  const [isReady, setIsReady] = useState(false);
+  const [getEpisodeTime, setGetEpisodeTime] = useState(0);
+  const [episodeTime, setEpisodeTime] = useState(0);
 
   const getCourse = async function () {
     if (typeof courseId !== "string") return;
@@ -27,18 +32,62 @@ const EpisodePlayer = function () {
     }
   };
 
+
+  const handleLastEpisode = () => {
+    router.push(`/courses/episodes/${episodeOrder - 1}?courseid=${course?.id}&episodeid=${episodeId - 1}`);
+  };
+  const handleNextEpisode = () => {
+    router.push(`/courses/episodes/${episodeOrder + 1}?courseid=${course?.id}&episodeid=${episodeId + 1}`);
+  };
+
+  const handleGetEpisodeTime = async () => {
+    const res = await watchEpisodeService.getWatchTime(episodeId);
+    if (res.data !== null) {
+      setGetEpisodeTime(res.data.seconds);
+    }
+  };
+
+  const playerRef = useRef<ReactPlayer>(null);
+
+  const handlePlayerTime = () => {
+    playerRef.current?.seekTo(getEpisodeTime);
+    setIsReady(true);
+  };
+
+  if (isReady === true) {
+    setTimeout(() => {
+      handleSetEpisodeTime();
+    }, 1000 * 3);
+  }
+
+  const handleSetEpisodeTime = async () => {
+    await watchEpisodeService.setWatchTime({
+      episodeId: episodeId,
+      seconds: Math.round(episodeTime),
+    });
+  };
+
+ 
+
   useEffect(() => {
     getCourse();
   }, [courseId]);
 
-  const handleLastEpisode = () => {
-    router.push(`/courses/episodes/${episodeOrder - 1}?courseid=${course?.id}`);
-  };
-  const handleNextEpisode = () => {
-    router.push(`/courses/episodes/${episodeOrder + 1}?courseid=${course?.id}`);
-  };
+  useEffect(() => {
+    handleGetEpisodeTime();
+  }, [router]);
+
+  
 
   if (course?.episodes == undefined) return <PageSpinner />;
+
+  if (episodeOrder + 1 < course?.episodes?.length) {
+    if (Math.round(episodeTime) === course.episodes[episodeOrder].secondsLong) {
+      handleNextEpisode();
+    }
+  }
+  
+  
 
   return (
     <>
@@ -57,14 +106,19 @@ const EpisodePlayer = function () {
               className={styles.player}
               url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`}
               controls
+              ref={playerRef}
+              onStart={handlePlayerTime}
+              onProgress={(progress) => {
+                setEpisodeTime(progress.playedSeconds);
+              }}
             />
           )}
           <div className={styles.episodeButtonDiv}>
 	          <Button className={styles.episodeButton} disabled={episodeOrder === 0 ? true : false} onClick={handleLastEpisode}>
-              &#x2B05;
+              <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg}/>
             </Button>
 	          <Button className={styles.episodeButton} disabled={episodeOrder+1 === course.episodes.length ? true : false} onClick={handleNextEpisode}>
-              &#x27A1;
+              <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg}/>
             </Button>
           </div>
           <p className="text-center py-4">
