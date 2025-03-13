@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
 import EpisodeList from "@/components/episodesList";
 import Footer from "@/components/common/footer";
+import PageSpinner from "@/components/common/spinner";
 
 const CoursePage = function () {
 
@@ -16,9 +17,17 @@ const CoursePage = function () {
     const { id } = router.query;
     const [liked, setLiked] = useState(false);
     const [favorited, setFavorited] = useState(false);
-
+    const [loading, setLoading] = useState(true);
     const [course, setCourse] = useState<CourseType>();
     const [episodes, setEpisode] = useState<EpisodeType>();
+
+    useEffect(() => {
+        if (!sessionStorage.getItem("onebitflix-token")) {
+          router.push("/login");
+        } else {
+          setLoading(false);
+        }
+      }, []);
 
     const getCourse = async function () {
         if (typeof id !== "string") return;
@@ -54,6 +63,12 @@ const CoursePage = function () {
     useEffect(() => {
         getCourse();
     }, [id]);
+
+    if(course === undefined) return <PageSpinner />
+  
+    if (loading) {
+        return <PageSpinner />;
+    }
 
     return (
         <>

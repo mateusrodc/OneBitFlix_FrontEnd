@@ -18,7 +18,7 @@ const EpisodePlayer = function () {
   const episodeOrder = parseFloat(router.query.id?.toString() || "");
   const courseId = router.query.courseid?.toString() || "";
   const episodeId = parseFloat(router.query.episodeid?.toString() || "");
-
+  const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<CourseType>();
   const [isReady, setIsReady] = useState(false);
   const [getEpisodeTime, setGetEpisodeTime] = useState(0);
@@ -67,17 +67,21 @@ const EpisodePlayer = function () {
     });
   };
 
- 
-
   useEffect(() => {
     getCourse();
   }, [courseId]);
 
   useEffect(() => {
+    if (!sessionStorage.getItem("onebitflix-token")) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     handleGetEpisodeTime();
   }, [router]);
-
-  
 
   if (course?.episodes == undefined) return <PageSpinner />;
 
@@ -86,8 +90,10 @@ const EpisodePlayer = function () {
       handleNextEpisode();
     }
   }
-  
-  
+
+  if (loading) {
+    return <PageSpinner />;
+  }
 
   return (
     <>

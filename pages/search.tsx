@@ -9,14 +9,27 @@ import courseService, { CourseType } from "@/services/courseService";
 import SearchCard from '@/components/searchCard';
 import { Container } from 'reactstrap';
 import Footer from '@/components/common/footer';
+import PageSpinner from '@/components/common/spinner';
 
 const Search = function () {
 
     const router = useRouter();
     const searchName = router.query.name;
-
+    const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
     const [searchRender, setSearchRender] = useState(false);
+
+    useEffect(() => {
+        if (!sessionStorage.getItem("onebitflix-token")) {
+          router.push("/login");
+        } else {
+          setLoading(false);
+        }
+    }, []);
+    
+    if (loading) {
+        return <PageSpinner />;
+    }
 
     const searchCourses = async () => {
         if (typeof searchName === "string") {
