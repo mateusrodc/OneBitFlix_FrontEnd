@@ -9,6 +9,9 @@ interface props {
   }
   
   const SlideSection = function ({ newestCourses }: props) {
+    if (!newestCourses) {
+      return null;
+    }
     return (
     <>
     	<Container fluid className="d-flex flex-column align-items-center py-5">

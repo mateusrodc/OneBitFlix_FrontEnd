@@ -48,13 +48,23 @@ const HomeNotAuth = function ({ course }: IndexPageProps) {
 )};
 
 export const getStaticProps: GetStaticProps = async () => {
-    const res = await courseService.getNewestCourses();
+  const res = await courseService.getNewestCourses();
+  if (res && res.data) {
     return {
       props: {
         course: res.data,
       },
       revalidate: 3600 * 24,
     };
+  } else {
+    console.error("getStaticProps: Dados da API inválidos ou ausentes.");
+    return {
+      props: {
+        course: [],
+      },
+      revalidate: 3600 * 24,
+    };
+  }
 };
 
 export default HomeNotAuth;
