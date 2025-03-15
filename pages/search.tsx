@@ -17,7 +17,18 @@ const Search = function () {
     const searchName = router.query.name;
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
-    const [searchRender, setSearchRender] = useState(false);
+
+    const searchCourses = async () => {
+        if (typeof searchName === "string") {
+          const res = await courseService.getSearch(searchName);
+    
+          setSearchResult(res.data.courses);
+        }
+    };
+
+    useEffect(() => {
+        searchCourses();
+    }, [searchName]);
 
     useEffect(() => {
         if (!sessionStorage.getItem("onebitflix-token")) {
@@ -31,21 +42,9 @@ const Search = function () {
         return <PageSpinner />;
     }
 
-    const searchCourses = async () => {
-        if (typeof searchName === "string") {
-          const res = await courseService.getSearch(searchName);
     
-          setSearchResult(res.data.courses);
-    
-          if (res.data.courses.length === 0) {
-            setSearchRender(false);
-          }
-        }
-    };
 
-    useEffect(() => {
-        searchCourses();
-    }, [searchName]);
+    
 
     return (
         <>

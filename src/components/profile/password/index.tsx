@@ -3,7 +3,6 @@ import styles from "../../../../styles/profile.module.scss";
 import { FormEvent, useEffect, useState } from "react";
 import profileService from "@/services/profileService";
 import ToastComponent from "@/components/common/toast";
-import Footer from "@/components/common/footer";
 
 const PasswordForm= function () {
     const [currentPassword, setCurrentPassword] = useState("");

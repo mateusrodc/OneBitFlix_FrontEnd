@@ -26,7 +26,7 @@ const Register = function () {
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     
-    event.preventDefault();
+      event.preventDefault();
       const formData = new FormData(event.currentTarget);
       const firstName = formData.get("firstName")!.toString();
       const lastName = formData.get("lastName")!.toString();
@@ -40,8 +40,8 @@ const Register = function () {
       if (password != confirmPassword) {
         setToastIsOpen(true);
         setTimeout(() => {
-        setToastIsOpen(false);
-      }, 1000 * 3);
+          setToastIsOpen(false);
+        }, 1000 * 3);
         setToastMessage("Senha e confirmação diferentes.");
             
         return;
@@ -54,8 +54,8 @@ const Register = function () {
       } else {
         setToastIsOpen(true);
         setTimeout(() => {
-        setToastIsOpen(false);
-      }, 1000 * 3);
+          setToastIsOpen(false);
+        }, 1000 * 3);
         setToastMessage(data.message);
       }
   };

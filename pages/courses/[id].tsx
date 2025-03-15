@@ -1,4 +1,4 @@
-import courseService, { CourseType, EpisodeType } from "@/services/courseService";
+import courseService, { CourseType } from "@/services/courseService";
 import '../../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../../styles/coursePage.module.scss";
@@ -19,7 +19,6 @@ const CoursePage = function () {
     const [favorited, setFavorited] = useState(false);
     const [loading, setLoading] = useState(true);
     const [course, setCourse] = useState<CourseType>();
-    const [episodes, setEpisode] = useState<EpisodeType>();
 
     useEffect(() => {
         if (!sessionStorage.getItem("onebitflix-token")) {
