@@ -1,4 +1,3 @@
-import '../../../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../../../styles/episodePlayer.module.scss";
 import Head from "next/head";

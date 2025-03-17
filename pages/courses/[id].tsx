@@ -1,5 +1,4 @@
 import courseService, { CourseType } from "@/services/courseService";
-import '../../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../../styles/coursePage.module.scss";
 import HeaderAuth from "@/components/common/headerAuth";
