@@ -1,5 +1,4 @@
 import Head from "next/head";
-import '../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../styles/profile.module.scss";
 import HeaderAuth from "@/components/common/headerAuth";

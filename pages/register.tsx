@@ -1,5 +1,4 @@
 import HeaderGeneric from "@/components/common/headerGeneric";
-import '../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../styles/registerLogin.module.scss";
 import Head from "next/head";

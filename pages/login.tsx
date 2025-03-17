@@ -1,6 +1,5 @@
 import Head from "next/head";
 import HeaderGeneric from "../src/components/common/headerGeneric";
-import '../styles/globals.scss' 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from "../styles/registerLogin.module.scss";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
