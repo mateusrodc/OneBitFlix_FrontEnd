@@ -77,7 +77,7 @@ const CoursePage = function () {
             <main>
                 <div  style={{
                     backgroundImage: `linear-gradient(to bottom, #6666661a, #151515),
-                    url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
+                    url(${course?.thumbnailUrl})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     minHeight: "450px",
