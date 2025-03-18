@@ -8,7 +8,6 @@ interface props {
 }
 
 const SlideCard = function ({ course }: props) {
-  console.log("Thumbnail URL:", course.thumbnailUrl);
   return (
     <>
       <Link href={`/courses/${course.id}`} className={styles.link}>
