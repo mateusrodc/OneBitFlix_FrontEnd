@@ -13,7 +13,7 @@ const SlideCard = function ({ course }: props) {
       <Link href={`/courses/${course.id}`} className={styles.link}>
         <div className={styles.slide}>
           <Image
-              src={`${process.env.NEXT_PUBLIC_BASEURL}/${course.thumbnailUrl}`}
+              src={`${course.thumbnailUrl}`}
               alt={course.name}
               className={styles.slideImg}
           /> 
