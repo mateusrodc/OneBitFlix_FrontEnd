@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         course: res.data,
       },
-      revalidate: 3600 * 24,
+      revalidate: 1800,
     };
   } else {
     console.error("getStaticProps: Dados da API inválidos ou ausentes.");
@@ -61,7 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         course: [],
       },
-      revalidate: 3600 * 24,
+      revalidate: 1800,
     };
   }
 };
